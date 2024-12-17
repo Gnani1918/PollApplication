@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Results</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            background: #2b6cb0;
+            color: #fff;
+            padding: 1.5em 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 15px 15px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+
+        /* Results Container */
+        .results-container {
+            max-width: 600px;
+            margin: 2em auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            padding: 2em;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .choice-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: #edf2f7;
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .choice-card:hover {
+            background: #e2e8f0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .choice-text {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .vote-count {
+            font-size: 1em;
+            color: #2b6cb0;
+            font-weight: bold;
+        }
+
+        /* Vote Again Link */
+        .vote-again {
+            display: block;
+            text-align: center;
+            margin-top: 2em;
+            text-decoration: none;
+            font-size: 1.2em;
+            color: #fff;
+            background: #2b6cb0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .vote-again:hover {
+            background: #1a4e8d;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1em;
+            background: #2b6cb0;
+            color: #fff;
+            margin-top: 2em;
+            border-radius: 15px 15px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Poll Results</h1>
+    </header>
+
+    <div class="results-container">
+        <h2>{{ question.question_text }}</h2>
+        <ul style="list-style: none; padding: 0;">
+            {% for choice in question.choice_set.all %}
+                <li class="choice-card">
+                    <span class="choice-text">{{ choice.choice_text }}</span>
+                    <span class="vote-count">{{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'polls:detail' question.id %}" class="vote-again">Vote Again?</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Polls Application. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

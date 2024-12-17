@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            background: #2b6cb0;
+            color: #fff;
+            padding: 1.5em 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 15px 15px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+
+        /* Intro Message */
+        .message {
+            text-align: center;
+            font-size: 1.3em;
+            color: #555;
+            margin: 1.5em 0;
+        }
+
+        /* Polls Container */
+        .poll-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 2em;
+        }
+
+        /* Scrollable List */
+        .scrollable-list {
+            max-height: 400px; /* Adjust the height as needed */
+            overflow-y: auto;
+            padding-right: 10px; /* Prevents content cutoff when scrolling */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background: #edf2f7;
+            margin: 10px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        a {
+            text-decoration: none;
+            color: #2b6cb0;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: block;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #1a4e8d;
+            text-decoration: underline;
+        }
+
+        /* No Polls Available */
+        .no-polls {
+            text-align: center;
+            font-size: 1.2em;
+            color: #777;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1em;
+            background: #2b6cb0;
+            color: #fff;
+            margin-top: 2em;
+            border-radius: 15px 15px 0 0;
+        }
+
+        /* Scrollbar Styling */
+        .scrollable-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .scrollable-list::-webkit-scrollbar-thumb {
+            background: #2b6cb0;
+            border-radius: 10px;
+        }
+
+        .scrollable-list::-webkit-scrollbar-thumb:hover {
+            background: #1a4e8d;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Polls</h1>
+    </header>
+
+    <div class="message">
+        If you want to vote, please go through the links below:
+    </div>
+
+    <div class="poll-container">
+        {% if latest_question_list %}
+            <div class="scrollable-list">
+                <ul>
+                {% for question in latest_question_list %}
+                    <li>
+                        <a href="{% url 'polls:detail' question.id %}">
+                            {{ question.question_text }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p class="no-polls">No polls are available at the moment. Please check back later!</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Polls Application. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
